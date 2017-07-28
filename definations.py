@@ -59,3 +59,5 @@ class MyAnimeList:
             search_list.append(entry)
         
         return search_list
+
+mal = MyAnimeList()
