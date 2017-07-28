@@ -12,9 +12,9 @@ Simply run `mal.py` as script:
 - getpass
 
 ## TODO
-- <s>Authentication And Login</s>
-- <s>Search Anime</s>
-- View Anime
-- View User AnimeList
-- Add Anime
-- Remove Anime
+- [X] Authentication And Login
+- [X] Search Anime
+- [ ] View Anime
+- [ ] View User AnimeList
+- [ ] Add Anime
+- [ ] Remove Anime
