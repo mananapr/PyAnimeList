@@ -2,6 +2,19 @@ import requests
 from requests.auth import HTTPBasicAuth
 from bs4 import BeautifulSoup
 
+class UserAnime:
+    
+    def __init__(self, id, title, english, episodes, start_date, end_date, user_episodes, user_score, user_status):
+        self.id = id
+        self.title = title
+        self.english = english
+        self.episodes = episodes
+        self.start_date = start_date
+        self.end_date = end_date
+        self.user_episodes = user_episodes
+        self.user_score = user_score
+        self.user_status = user_status
+
 class Anime:
     
     def __init__(self, id, title, english, episodes, score, type, status, start_date, end_date, synopsis):
