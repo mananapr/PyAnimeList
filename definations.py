@@ -42,6 +42,32 @@ class MyAnimeList:
             self.pwd = pwd
             return 1
 
+    def get_user_list(self):
+
+        user_list = []
+        xml = requests.get('https://myanimelist.net/malappinfo.php?u=' + self.user + '&status=all&type=anime')
+        soup = BeautifulSoup(xml.text, 'lxml')
+        animes_xml = soup.find_all('anime')
+
+        for anime in animes_xml:
+
+            content = anime.contents
+            id = content[0].text
+            title = content[1].text
+            english = content[2].text
+            episodes = content[4].text
+            start_date = content[6].text
+            end_date = content[7].text
+            user_episodes = content[10].text
+            user_score = content[13].text
+            user_status = content[14].text
+
+            user_anime = UserAnime(id,title,english,episodes,start_date,end_date,user_episodes,user_score,user_status)
+            user_list.append(user_anime)
+
+        return user_list
+
+
     def search_anime(self,query):
         response = requests.get('https://myanimelist.net/api/anime/search.xml?q='+query, auth = HTTPBasicAuth(self.user,self.pwd))
         if response == '':

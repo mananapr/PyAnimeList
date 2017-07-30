@@ -1,6 +1,4 @@
-from definations import UserAnime, mal
-import requests
-from bs4 import BeautifulSoup
+from definations import mal
 import time
 import getpass
 import sys
@@ -12,36 +10,9 @@ pwd = ''
 def clear():
     os.system('clear')
 
-def get_user_list():
-    
-    user_list = []
-    global user
-
-    xml = requests.get('https://myanimelist.net/malappinfo.php?u='+user+'&status=all&type=anime')
-    soup = BeautifulSoup(xml.text, 'lxml')
-    animes_xml = soup.find_all('anime')
-    
-    for anime in animes_xml:
-        
-        content = anime.contents
-        id = content[0].text
-        title = content[1].text
-        english = content[2].text 
-        episodes = content[4].text
-        start_date = content[6].text
-        end_date = content[7].text
-        user_episodes = content[10].text
-        user_score = content[13].text
-        user_status = content[14].text
-
-        user_anime = UserAnime(id,title,english,episodes,start_date,end_date,user_episodes,user_score,user_status)
-        user_list.append(user_anime)
-
-    return user_list
-
 def display_anime_info(anime):
     clear()
-    user_anime = get_user_list()
+    user_anime = mal.get_user_list()
     in_user_list = 0
     for a in user_anime:
         if a.id == anime.id:
