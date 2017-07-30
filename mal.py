@@ -1,11 +1,9 @@
 from definations import mal
+import webbrowser
 import time
 import getpass
 import sys
 import os
-
-user = ''
-pwd = ''
 
 def clear():
     os.system('clear')
@@ -14,17 +12,52 @@ def display_anime_info(anime):
     clear()
     user_anime = mal.get_user_list()
     in_user_list = 0
+    temp = ''
     for a in user_anime:
         if a.id == anime.id:
+            temp = a
             in_user_list = 1
             break
 
     if in_user_list == 0:
-        ## For Now
-        print('%s\n%s\n%s\n' %(anime.id, anime.title, anime.score))
+        print('%s (%s)\nScore: %s\nEpisodes: %s\nStatus: %s\nDuration: %s - %s\n\n\t\tSynopsis\n%s\n\n' %(anime.title, anime.english, anime.score, anime.episodes, anime.status, anime.start_date, anime.end_date, anime.synopsis))
+        print('(a)dd anime   (s)earch   (m)ain menu (o)pen in browser')
+        choice = input('> ')
+        if choice == 'a':
+            ## add anime
+            pass
+        elif choice == 's':
+            search()
+        elif choice == 'm':
+            main()
+        elif choice == 'o':
+            webbrowser.open('https://myanimelist.net/anime/' + anime.id)
+        else:
+            clear()
+            print('Invalid Option... Redirecting to Main Menu')
+            time.sleep(2)
+            main()
     else:
-        ## For Now
-        print('\nIts in USer List!')
+        print('%s (%s)\nMAL Score: %s\nYour Score: %s\nEpisodes: %s/%s\nStatus: %s\nDuration: %s - %s\n\n\t\tSynopsis\n%s\n\n' %(anime.title, anime.english, anime.score, temp.user_score, temp.user_episodes, anime.episodes, anime.status, anime.start_date, anime.end_date, anime.synopsis)) 
+        print('(u)pdate   (d)elete   (s)earch   (m)ain   (o)pen in browser')
+        choice = input('> ')
+        if choice == 'u':
+            ## updtae
+            pass
+        elif choice == 'd':
+            ## delete
+            pass
+        elif choice == 's':
+            search()
+        elif choice == 'm':
+            main()
+        elif choice == 'o':
+            webbrowser.open('https://myanimelist.net/anime/' + anime.id)
+        else:
+            clear()
+            print('Invalid Option... Redirecting to Main Menu')
+            time.sleep(2)
+            main()
 
 def search():
     clear()
@@ -42,7 +75,7 @@ def search():
         i = 1
         print('\t\tSearch Results for "%s"' %(query))
         for result in results:
-            print('%d.) %s %s' %(i,result.title,result.status))
+            print('%d.) %s' %(i,result.title))
             i = i + 1
         print('\n(v)iew anime   (s)earch again   (m)ain menu')
         choice = input('> ')
@@ -68,8 +101,6 @@ def search():
 def login():
     clear()
     print('\t\tLogin')
-    global user
-    global pwd
     user = input('Enter Username: ')
     pwd = getpass.getpass('Enter Password for "%s": ' %(user))
     status = mal.authenticate_user(user, pwd)
