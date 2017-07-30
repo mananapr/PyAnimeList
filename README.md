@@ -14,7 +14,8 @@ Simply run `mal.py` as script:
 ## TODO
 - [X] Authentication And Login
 - [X] Search Anime
-- [ ] View Anime
+- [X] View Anime
 - [ ] View User AnimeList
 - [ ] Add Anime
 - [ ] Remove Anime
+- [ ] Update Anime
