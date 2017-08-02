@@ -16,6 +16,6 @@ Simply run `mal.py` as script:
 - [X] Search Anime
 - [X] View Anime
 - [X] View User AnimeList
-- [ ] Add Anime
-- [ ] Remove Anime
-- [ ] Update Anime
+- [X] Add Anime
+- [X] Remove Anime
+- [X] Update Anime
