@@ -9,7 +9,6 @@ Simply run `mal.py` as script:
 ## Dependencies
 - beautifulsoup4
 - requests
-- getpass
 
 ## TODO
 - [X] Authentication And Login
