@@ -38,7 +38,11 @@ def display_anime_info(anime):
             time.sleep(2)
             main()
     else:
-        print('%s (%s)\nMAL Score: %s\nYour Score: %s\nEpisodes: %s/%s\nStatus: %s\nDuration: %s - %s\n\n\t\tSynopsis\n%s\n\n' %(anime.title, anime.english, anime.score, temp.user_score, temp.user_episodes, anime.episodes, anime.status, anime.start_date, anime.end_date, anime.synopsis)) 
+        print('Please Wait... Fetching Info...')
+        res = mal.search_anime(anime.title)
+        res = res[0]
+        clear()
+        print('%s (%s)\nMAL Score: %s\nYour Score: %s\nEpisodes: %s/%s\nStatus: %s\nDuration: %s - %s\n\n\t\tSynopsis\n%s\n\n' %(anime.title, anime.english, res.score, temp.user_score, temp.user_episodes, res.episodes, res.status, anime.start_date, anime.end_date, res.synopsis)) 
         print('(u)pdate   (d)elete   (s)earch   (m)ain   (o)pen in browser')
         choice = input('> ')
         if choice == 'u':
@@ -96,7 +100,55 @@ def search():
             print('Unknown input! Redirecting to Main Menu')
             time.sleep(2)
             main()
-        
+
+def view_user_list(user_list, status):
+    
+    temp = []
+    counter = 1
+    
+    for anime in user_list:
+        if anime.user_status == status:
+            temp.append(anime)
+
+    for anime in temp:
+        print('%d.) %s' %(counter, anime.title))
+        counter = counter + 1
+
+    print('\n(v)iew (b)ack (m)ain')
+    choice = input('> ')
+
+    if choice == 'v':
+        num = int(input('Enter Anime Number: '))
+        display_anime_info(temp[num-1])
+    elif choice == 'b':
+        view_user_list_main()
+    else:
+        main()
+
+def view_user_list_main():
+    
+    clear()
+    print('(w)atching   (c)ompleted   (p)lan to watch   (o)n hold   (d)ropped   (m)ain menu')
+    choice = input('> ')
+    user_list = mal.get_user_list()
+    
+    if choice == 'w':
+        view_user_list(user_list, '1')
+    elif choice == 'c':
+        view_user_list(user_list, '2')
+    elif choice == 'p':
+        view_user_list(user_list, '6')
+    elif choice == 'o':
+        view_user_list(user_list, '3')
+    elif choice == 'd':
+        view_user_list(user_list, '4')
+    elif choice == 'm':
+        main()
+    else:
+        clear()
+        print('Invalid Option')
+        time.sleep(2)
+        view_user_list_main()
 
 def login():
     clear()
@@ -120,11 +172,13 @@ def login():
 def main():
     clear()
     print('Welcome!')
-    print('1.)Search Anime\n2.)Exit\n')
+    print('1.)Search Anime\n2.)View Anime List\n3.)Exit\n')
     choice = int(input('Enter Choice: '))
     if choice == 1:
         search()
-    elif choice == 2:
+    if choice == 2:
+        view_user_list_main()
+    elif choice == 3:
         sys.exit(0)
     else:
         main()
