@@ -21,11 +21,14 @@ def display_anime_info(anime):
 
     if in_user_list == 0:
         print('%s (%s)\nScore: %s\nEpisodes: %s\nStatus: %s\nDuration: %s - %s\n\n\t\tSynopsis\n%s\n\n' %(anime.title, anime.english, anime.score, anime.episodes, anime.status, anime.start_date, anime.end_date, anime.synopsis))
-        print('(a)dd anime   (s)earch   (m)ain menu (o)pen in browser')
+        print('(a)dd anime   (s)earch   (m)ain menu   (o)pen in browser')
         choice = input('> ')
         if choice == 'a':
-            ## add anime
-            pass
+            mal.add_anime(anime)
+            clear()
+            print('Added in Your Plan to Watch List')
+            time.sleep(1)
+            main()
         elif choice == 's':
             search()
         elif choice == 'm':
@@ -46,11 +49,17 @@ def display_anime_info(anime):
         print('(u)pdate   (d)elete   (s)earch   (m)ain   (o)pen in browser')
         choice = input('> ')
         if choice == 'u':
-            ## updtae
-            pass
+            mal.update_anime(anime)
+            clear()
+            print('Updated!')
+            time.sleep(1)
+            main()
         elif choice == 'd':
-            ## delete
-            pass
+            mal.delete_anime(anime)
+            clear()
+            print('Deleted!')
+            time.sleep(1)
+            main()
         elif choice == 's':
             search()
         elif choice == 'm':
@@ -114,7 +123,7 @@ def view_user_list(user_list, status):
         print('%d.) %s' %(counter, anime.title))
         counter = counter + 1
 
-    print('\n(v)iew (b)ack (m)ain')
+    print('\n(v)iew   (b)ack   (m)ain')
     choice = input('> ')
 
     if choice == 'v':
@@ -176,9 +185,10 @@ def main():
     choice = int(input('Enter Choice: '))
     if choice == 1:
         search()
-    if choice == 2:
+    elif choice == 2:
         view_user_list_main()
     elif choice == 3:
+        clear()
         sys.exit(0)
     else:
         main()

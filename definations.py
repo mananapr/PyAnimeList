@@ -1,6 +1,11 @@
 import requests
+import time
+import os
 from requests.auth import HTTPBasicAuth
 from bs4 import BeautifulSoup
+
+def clear():
+    os.system('clear')
 
 class UserAnime:
     
@@ -41,6 +46,75 @@ class MyAnimeList:
             self.user = user
             self.pwd = pwd
             return 1
+
+    def gen_payload(self, episode, status, score):
+        
+        xml_payload =  """<?xml version="1.0" encoding="UTF-8"?><entry><episode>"""+ episode +"""</episode>"""
+        xml_payload = xml_payload + """<status>"""+ status +"""</status><score>"""+ score +"""</score>"""
+        xml_payload = xml_payload + """<storage_type></storage_type><storage_value></storage_value><times_rewatched></times_rewatched><rewatch_value></rewatch_value><date_start></date_start><date_finish></date_finish><priority></priority><enable_discussion></enable_discussion><enable_rewatching></enable_rewatching><comments></comments><tags></tags></entry>"""
+
+        return xml_payload
+
+    def add_anime(self, anime):
+        
+        payload = self.gen_payload('0', '6', '')
+        data = {'data':payload}
+        req = requests.post('https://myanimelist.net/api/animelist/add/'+ anime.id + '.xml', data=data, auth = HTTPBasicAuth(self.user,self.pwd))
+
+    def delete_anime(self, anime):
+        
+        payload = self.gen_payload(anime.user_episodes, anime.user_status, anime.user_score)
+        data = {'data':payload}
+        req = requests.post('https://myanimelist.net/api/animelist/delete/'+ anime.id + '.xml', data=data, auth = HTTPBasicAuth(self.user,self.pwd))
+
+    def update_anime(self, anime):
+        
+        clear()
+        if_episodes = input('Would you like update number of episodes? (y/n): ')
+        if if_episodes == 'y':
+            episode = input('Enter Watched Episodes: ')
+        else:
+            episode = anime.user_episodes
+
+        if int(episode) > int(anime.episodes):
+            print('\nInvalid Number of episodes!')
+            time.sleep(1)
+            self.update_anime(anime)
+
+        if_animelist = input('\nWould you like to Change its animelist?(y/n): ')
+        if if_animelist == 'y':
+            print('\nChoose AnimeList:')
+            print('(w)atching   (c)ompleted   (p)lan to watch   (o)n hold   (d)ropped')
+            animelist_choice = input('> ')
+
+            if animelist_choice == 'w':
+                status = '1'
+            elif animelist_choice == 'c':
+                status = '2'
+            elif animelist_choice == 'p':
+                status = '6'
+            elif animelist_choice == 'o':
+                status = '3'
+            elif animelist_choice == 'd':
+                status = '4'
+            else:
+                print('Animelist will not be changed as unknown input given')
+                status = anime.user_status
+        else:
+            status = anime.user_status
+
+        if_score = input('\nWould you like to update the score?(y/n)')
+        if if_score == 'y':
+            score = input('\nEnter Score (-1 for no score): ')
+            if score == '-1':
+                score = ''
+        else:
+            score = anime.user_score
+
+        payload = self.gen_payload(episode, status, score)
+        data = {'data':payload}
+
+        req = requests.post('https://myanimelist.net/api/animelist/update/'+ anime.id + '.xml', data=data, auth = HTTPBasicAuth(self.user,self.pwd))
 
     def get_user_list(self):
 
