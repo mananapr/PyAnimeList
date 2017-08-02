@@ -72,7 +72,7 @@ class MyAnimeList:
         clear()
         if_episodes = input('Would you like update number of episodes? (y/n): ')
         if if_episodes == 'y':
-            episode = input('Enter Watched Episodes: ')
+            episode = input('Enter Watched Episodes (Currently %s/%s): ' %(anime.user_episodes, anime.episodes))
         else:
             episode = anime.user_episodes
 
@@ -103,7 +103,7 @@ class MyAnimeList:
         else:
             status = anime.user_status
 
-        if_score = input('\nWould you like to update the score?(y/n)')
+        if_score = input('\nWould you like to update the score?(y/n): ')
         if if_score == 'y':
             score = input('\nEnter Score (-1 for no score): ')
             if score == '-1':
