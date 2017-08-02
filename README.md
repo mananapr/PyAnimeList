@@ -10,6 +10,10 @@ Simply run `mal.py` as script:
 - beautifulsoup4
 - requests
 
+Install dependencies using `pip`:
+
+    pip install -r requirements.txt
+
 ## TODO
 - [X] Authentication And Login
 - [X] Search Anime
