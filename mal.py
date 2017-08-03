@@ -37,6 +37,7 @@ def display_anime_info(anime):
             main()
         elif choice == 'o':
             webbrowser.open('https://myanimelist.net/anime/' + anime.id)
+            display_anime_info(anime)
         else:
             clear()
             columns = shutil.get_terminal_size().columns
@@ -71,6 +72,7 @@ def display_anime_info(anime):
             main()
         elif choice == 'o':
             webbrowser.open('https://myanimelist.net/anime/' + anime.id)
+            display_anime_info(anime)
         else:
             clear()
             print('Invalid Option... Redirecting to Main Menu')
