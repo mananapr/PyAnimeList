@@ -1,5 +1,6 @@
 from definations import mal
 import webbrowser
+import shutil
 import time
 import getpass
 import sys
@@ -26,7 +27,8 @@ def display_anime_info(anime):
         if choice == 'a':
             mal.add_anime(anime)
             clear()
-            print('Added in Your Plan to Watch List')
+            columns = shutil.get_terminal_size().columns
+            print('Added in Your Plan to Watch List'.center(columns))
             time.sleep(1)
             main()
         elif choice == 's':
@@ -37,7 +39,8 @@ def display_anime_info(anime):
             webbrowser.open('https://myanimelist.net/anime/' + anime.id)
         else:
             clear()
-            print('Invalid Option... Redirecting to Main Menu')
+            columns = shutil.get_terminal_size().columns
+            print('Invalid Option... Redirecting to Main Menu'.center(columns))
             time.sleep(2)
             main()
     else:
@@ -51,13 +54,15 @@ def display_anime_info(anime):
         if choice == 'u':
             mal.update_anime(anime)
             clear()
-            print('Updated!')
+            columns = shutil.get_terminal_size().columns
+            print('Updated!'.center(columns))
             time.sleep(1)
             main()
         elif choice == 'd':
             mal.delete_anime(anime)
             clear()
-            print('Deleted!')
+            columns = shutil.get_terminal_size().columns
+            print('Deleted!'.center(columns))
             time.sleep(1)
             main()
         elif choice == 's':
@@ -161,7 +166,8 @@ def view_user_list_main():
 
 def login():
     clear()
-    print('\t\tLogin')
+    columns = shutil.get_terminal_size().columns
+    print('Login'.center(columns))
     user = input('Enter Username: ')
     pwd = getpass.getpass('Enter Password for "%s": ' %(user))
     status = mal.authenticate_user(user, pwd)
