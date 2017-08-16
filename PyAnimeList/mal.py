@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from definations import mal
 import webbrowser
 import shutil
