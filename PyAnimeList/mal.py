@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import .definations
+from .definations import *
 import webbrowser
 import shutil
 import time
